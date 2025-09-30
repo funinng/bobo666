@@ -30,7 +30,3 @@ features:
     title: 按需引入
     details: 直接支持按需引入无需配置任何插件。
 ---
-
-# bobo
-
-欢迎来到 bobo，一个基于 Vite & Vue3 的组件库，适合学习和参考。

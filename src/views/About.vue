@@ -1,8 +1,36 @@
-<template>
-  <div class="p-4">关于页面</div>
-  <HelloWorld msg="关于页面的内容" />
-</template>
 <script setup lang="ts">
-import HelloWorld from '@/components/HelloWorld.vue';
-// About 页面逻辑
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+
+} from '@/components/ui/alert-dialog'
+import Button from '@/components/ui/button/Button.vue';
 </script>
+
+<template>
+  <AlertDialog>
+    <AlertDialogTrigger>
+      <Button>Open Dialog</Button>
+    </AlertDialogTrigger>
+    <AlertDialogContent>
+      <AlertDialogHeader>
+        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+        <AlertDialogDescription>
+          This action cannot be undone. This will permanently delete your account
+          and remove your data from our servers.
+        </AlertDialogDescription>
+      </AlertDialogHeader>
+      <AlertDialogFooter>
+        <AlertDialogCancel>Cancel</AlertDialogCancel>
+        <AlertDialogAction>Continue</AlertDialogAction>
+      </AlertDialogFooter>
+    </AlertDialogContent>
+  </AlertDialog>
+</template>
