@@ -11,13 +11,12 @@ import {
   AlertDialogTrigger,
 
 } from '@/components/ui/alert-dialog'
-import Button from '@/components/ui/button/Button.vue';
 </script>
 
 <template>
   <AlertDialog>
     <AlertDialogTrigger>
-      <Button>Open Dialog</Button>
+      <zjlButton>Open Dialog</zjlButton>
     </AlertDialogTrigger>
     <AlertDialogContent>
       <AlertDialogHeader>
