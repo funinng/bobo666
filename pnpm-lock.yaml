@@ -41,6 +41,9 @@ importers:
       tw-animate-css:
         specifier: ^1.4.0
         version: 1.4.0
+      vitepress-demoblock:
+        specifier: ^1.0.4
+        version: 1.0.4
       vue:
         specifier: ^3.5.21
         version: 3.5.22(typescript@5.8.3)
@@ -1815,6 +1818,10 @@ packages:
       yaml:
         optional: true
 
+  vitepress-demoblock@1.0.4:
+    resolution: {integrity: sha512-k7Asrpp5X5cGl2SeMJFcafKdHSQQR7lXsZPpkUvRepZR7DKtmYq6tjfff6UInmaVYTdDvfJkobo/5KSxX0mPlA==}
+    engines: {node: '>=14'}
+
   vitepress@1.6.4:
     resolution: {integrity: sha512-+2ym1/+0VVrbhNyRoFFesVvBvHAVMZMK0rw60E3X/5349M1GuVdKeazuksqopEdvkKwKGs21Q729jX81/bkBJg==}
     hasBin: true
@@ -3549,6 +3556,8 @@ snapshots:
       fsevents: 2.3.3
       jiti: 2.6.0
       lightningcss: 1.30.1
+
+  vitepress-demoblock@1.0.4: {}
 
   vitepress@1.6.4(@algolia/client-search@5.39.0)(@types/node@24.5.2)(lightningcss@1.30.1)(postcss@8.5.6)(search-insights@2.17.3)(typescript@5.8.3):
     dependencies:
