@@ -3,6 +3,24 @@ import type { RouteRecordRaw } from 'vue-router';
 
 const routes: RouteRecordRaw[] = [
   {
+    path: '/login',
+    name: 'Login',
+    component: () => import('@/views/Login.vue'),
+    meta: {
+      title: '登录',
+      hideLayout: true,
+    },
+  },
+  {
+    path: '/auth/:provider/callback',
+    name: 'SSOCallback',
+    component: () => import('@/views/SSOCallback.vue'),
+    meta: {
+      title: 'SSO回调',
+      hideLayout: true,
+    },
+  },
+  {
     path: '/',
     component: () => import('@/layouts/MainLayout.vue'),
     children: [
@@ -15,6 +33,17 @@ const routes: RouteRecordRaw[] = [
           icon: 'mdi-home',
           sidebar: true,
           activeName: 'Home',
+        },
+      },
+      {
+        path: 'sso-demo',
+        name: 'SSODemo',
+        component: () => import('@/views/SSODemo.vue'),
+        meta: {
+          title: 'SSO演示',
+          icon: 'mdi-login',
+          sidebar: true,
+          activeName: 'SSODemo',
         },
       },
       {

@@ -1,5 +1,7 @@
 <template>
-    <Button v-bind="props" @click="props.onClick" />
+    <Button v-bind="props">
+        <slot></slot>
+    </Button>
 </template>
 <script setup lang="tsx">
 import { defineProps } from 'vue'
