@@ -167,18 +167,50 @@ export class SSOService {
    * 生成随机state参数
    */
   private static generateState(): string {
-    return (
-      Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
-    );
+    const state = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15) + Date.now().toString(36);
+    // 存储state到sessionStorage用于验证
+    sessionStorage.setItem('sso_state', state);
+    sessionStorage.setItem('sso_state_timestamp', Date.now().toString());
+    return state;
   }
 
   /**
    * 验证state参数
    */
   private static validateState(state: string): boolean {
-    // 这里应该验证state参数的有效性
-    // 简单实现，实际项目中应该存储并验证state
-    return Boolean(state && state.length > 10);
+    const storedState = sessionStorage.getItem('sso_state');
+    const stateTimestamp = sessionStorage.getItem('sso_state_timestamp');
+    
+    // 验证state是否匹配
+    if (!storedState || storedState !== state) {
+      console.error('State参数不匹配');
+      return false;
+    }
+    
+    // 验证state是否过期 (5分钟)
+    if (stateTimestamp) {
+      const timestamp = parseInt(stateTimestamp);
+      const now = Date.now();
+      const fiveMinutes = 5 * 60 * 1000;
+      
+      if (now - timestamp > fiveMinutes) {
+        console.error('State参数已过期');
+        this.clearStateData();
+        return false;
+      }
+    }
+    
+    // 验证成功后清理state数据
+    this.clearStateData();
+    return true;
+  }
+
+  /**
+   * 清理state相关数据
+   */
+  private static clearStateData(): void {
+    sessionStorage.removeItem('sso_state');
+    sessionStorage.removeItem('sso_state_timestamp');
   }
 
   /**
@@ -205,6 +237,7 @@ export class SSOService {
     localStorage.removeItem('user_info');
     sessionStorage.removeItem('sso_provider');
     sessionStorage.removeItem('sso_timestamp');
+    this.clearStateData();
   }
 }
 

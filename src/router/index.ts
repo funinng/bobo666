@@ -8,7 +8,8 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/Login.vue'),
     meta: {
       title: '登录',
-      hideLayout: true,
+      hideLayout: false,
+      requiresAuth: false,
     },
   },
   {
@@ -18,6 +19,7 @@ const routes: RouteRecordRaw[] = [
     meta: {
       title: 'SSO回调',
       hideLayout: true,
+      requiresAuth: false,
     },
   },
   {
@@ -33,6 +35,7 @@ const routes: RouteRecordRaw[] = [
           icon: 'mdi-home',
           sidebar: true,
           activeName: 'Home',
+          requiresAuth: true,
         },
       },
       {
@@ -44,6 +47,31 @@ const routes: RouteRecordRaw[] = [
           icon: 'mdi-login',
           sidebar: true,
           activeName: 'SSODemo',
+          requiresAuth: false,
+        },
+      },
+      {
+        path: 'chat',
+        name: 'Chat',
+        component: () => import('@/views/Chat.vue'),
+        meta: {
+          title: 'AI 聊天',
+          icon: 'mdi-chat',
+          sidebar: true,
+          activeName: 'Chat',
+          requiresAuth: true,
+        },
+      },
+      {
+        path: 'openai-test',
+        name: 'OpenAITest',
+        component: () => import('@/views/OpenAITest.vue'),
+        meta: {
+          title: 'OpenAI 测试',
+          icon: 'mdi-test-tube',
+          sidebar: true,
+          activeName: 'OpenAITest',
+          requiresAuth: true,
         },
       },
       {
@@ -55,6 +83,7 @@ const routes: RouteRecordRaw[] = [
           icon: 'mdi-information',
           sidebar: true,
           activeName: 'About',
+          requiresAuth: true,
         },
       },
       {
@@ -67,6 +96,7 @@ const routes: RouteRecordRaw[] = [
           icon: 'mdi-file-document',
           sidebar: true,
           group: true,
+          requiresAuth: true,
         },
         children: [
           {
@@ -77,6 +107,7 @@ const routes: RouteRecordRaw[] = [
               title: '使用指南',
               icon: 'mdi-book-open',
               sidebar: true,
+              requiresAuth: true,
             },
           },
           {
@@ -87,6 +118,7 @@ const routes: RouteRecordRaw[] = [
               title: 'API文档',
               icon: 'mdi-api',
               sidebar: true,
+              requiresAuth: true,
             },
           },
         ],

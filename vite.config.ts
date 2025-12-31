@@ -12,7 +12,7 @@ export default defineConfig({
     tailwindcss(),
     VueDevTools(),
     Components({
-      dirs: ['src/components/zjlComponents', 'src/components'], // 自动导入自定义组件
+      dirs: ['src/components'], // 自动导入自定义组件
       // 可添加 resolvers 支持第三方UI库
     }),
     AutoImport({

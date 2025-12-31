@@ -38,10 +38,11 @@
 import { ref, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { Icon } from '@iconify/vue'
-import { SSOService } from '@/services/sso'
+import { useAuthStore } from '@/stores/auth'
 
 const router = useRouter()
 const route = useRoute()
+const authStore = useAuthStore()
 
 const progress = ref(0)
 const statusMessage = ref('正在验证身份...')
@@ -70,7 +71,7 @@ const handleCallback = async () => {
     statusMessage.value = '验证授权信息...'
 
     // 处理SSO回调
-    const result = await SSOService.handleSSOCallback(
+    const result = await authStore.handleSSOCallback(
       code as string, 
       state as string, 
       provider

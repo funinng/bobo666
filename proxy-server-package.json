@@ -1,0 +1,25 @@
+{
+  "name": "openai-proxy-server",
+  "version": "1.0.0",
+  "description": "OpenAI API 代理服务器",
+  "main": "proxy-server-example.js",
+  "scripts": {
+    "start": "node proxy-server-example.js",
+    "dev": "nodemon proxy-server-example.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "openai": "^4.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "keywords": ["openai", "proxy", "api", "server"],
+  "author": "Your Name",
+  "license": "MIT"
+}
+
+
+
+

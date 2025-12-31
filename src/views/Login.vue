@@ -75,15 +75,32 @@
           <p class="text-sm lg:text-base text-gray-600">选择您的登录方式</p>
         </div>
 
+        <!-- SSO登录选项 -->
+        <div class="space-y-3 mb-4">
+          <h3 class="text-sm font-medium text-gray-700 text-center mb-3">第三方登录</h3>
+          <div class="grid grid-cols-2 gap-2">
+            <button v-for="(provider, key) in enabledProviders" :key="key" @click="handleSSOLogin(key)"
+              :disabled="isLoading" :class="[
+                'flex items-center justify-center gap-2 px-3 py-2 rounded-lg border text-sm font-medium transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none',
+                provider.color,
+                provider.hoverColor,
+                'text-white border-transparent'
+              ]">
+              <Icon :icon="provider.icon" class="w-4 h-4" />
+              <span class="hidden sm:inline">{{ provider.name }}</span>
+            </button>
+          </div>
+        </div>
+
         <!-- 分割线 -->
-        <!-- <div class="relative my-4">
+        <div class="relative my-4">
           <div class="absolute inset-0 flex items-center">
             <div class="w-full border-t border-gray-300"></div>
           </div>
           <div class="relative flex justify-center text-sm">
-            <span class="px-4 bg-white text-gray-500">或者</span>
+            <span class="px-4 bg-white text-gray-500">或使用账号密码</span>
           </div>
-        </div> -->
+        </div>
 
         <!-- 传统登录表单 -->
         <form @submit.prevent="handleLogin" class="space-y-3">
@@ -157,17 +174,20 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { Icon } from '@iconify/vue'
-import { SSOService, ssoProviders } from '@/services/sso'
+import { ssoProviders } from '@/services/sso'
+import { ssoConfig } from '@/config'
 import { Checkbox } from '@/components/ui/checkbox'
+import { useAuthStore } from '@/stores/auth'
 
 const router = useRouter()
+const authStore = useAuthStore()
 
 // 响应式数据
 const showPassword = ref(false)
-const isLoading = ref(false)
+const isLoading = computed(() => authStore.isLoading)
 
 const loginForm = reactive({
   username: '',
@@ -175,21 +195,27 @@ const loginForm = reactive({
   remember: false
 })
 
+// 计算启用的SSO提供商
+const enabledProviders = computed(() => {
+  const enabled: Record<string, any> = {}
+  Object.entries(ssoProviders).forEach(([key, provider]) => {
+    if (ssoConfig[key as keyof typeof ssoConfig]?.enabled) {
+      enabled[key] = provider
+    }
+  })
+  return enabled
+})
+
 // SSO登录处理
 const handleSSOLogin = async (provider: string) => {
   console.log(`正在使用 ${provider} 登录...`)
 
   try {
-    isLoading.value = true
-
-    // 使用SSO服务处理登录
-    await SSOService.handleSSOLogin(provider)
+    await authStore.ssoLogin(provider)
   } catch (error) {
     console.error('SSO登录失败:', error)
     // 这里可以显示错误提示
     alert(`${ssoProviders[provider]?.name || provider} 登录失败，请稍后重试`)
-  } finally {
-    isLoading.value = false
   }
 }
 
@@ -200,40 +226,20 @@ const handleLogin = async () => {
   }
 
   try {
-    isLoading.value = true
-
-    // 模拟API调用
-    const response = await fetch('/api/auth/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        username: loginForm.username,
-        password: loginForm.password,
-        remember: loginForm.remember
-      })
+    const data = await authStore.login({
+      username: loginForm.username,
+      password: loginForm.password,
+      remember: loginForm.remember
     })
-
-    if (!response.ok) {
-      throw new Error('登录失败')
-    }
-
-    const data = await response.json()
-
-    // 保存登录信息
-    localStorage.setItem('access_token', data.access_token)
-    localStorage.setItem('user_info', JSON.stringify(data.user))
 
     console.log('登录成功:', data)
 
     // 登录成功后跳转
-    router.push('/')
-  } catch (error) {
+    const redirect = authStore.loginRedirect || '/'
+    router.push(redirect)
+  } catch (error: any) {
     console.error('登录失败:', error)
-    alert('用户名或密码错误，请重试')
-  } finally {
-    isLoading.value = false
+    alert(error.message || '用户名或密码错误，请重试')
   }
 }
 </script>

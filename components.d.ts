@@ -26,6 +26,7 @@ declare module 'vue' {
     BreadcrumbPage: typeof import('./src/components/ui/breadcrumb/BreadcrumbPage.vue')['default']
     BreadcrumbSeparator: typeof import('./src/components/ui/breadcrumb/BreadcrumbSeparator.vue')['default']
     Button: typeof import('./src/components/ui/button/Button.vue')['default']
+    ChatInterface: typeof import('./src/components/ChatInterface.vue')['default']
     Checkbox: typeof import('./src/components/ui/checkbox/Checkbox.vue')['default']
     Collapsible: typeof import('./src/components/ui/collapsible/Collapsible.vue')['default']
     CollapsibleContent: typeof import('./src/components/ui/collapsible/CollapsibleContent.vue')['default']
@@ -44,7 +45,6 @@ declare module 'vue' {
     DropdownMenuSubContent: typeof import('./src/components/ui/dropdown-menu/DropdownMenuSubContent.vue')['default']
     DropdownMenuSubTrigger: typeof import('./src/components/ui/dropdown-menu/DropdownMenuSubTrigger.vue')['default']
     DropdownMenuTrigger: typeof import('./src/components/ui/dropdown-menu/DropdownMenuTrigger.vue')['default']
-    HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     Input: typeof import('./src/components/ui/input/Input.vue')['default']
     Label: typeof import('./src/components/ui/label/Label.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
@@ -90,6 +90,5 @@ declare module 'vue' {
     TooltipProvider: typeof import('./src/components/ui/tooltip/TooltipProvider.vue')['default']
     TooltipTrigger: typeof import('./src/components/ui/tooltip/TooltipTrigger.vue')['default']
     VersionSwitcher: typeof import('./src/components/VersionSwitcher.vue')['default']
-    ZjlButton: typeof import('./src/components/zjlComponents/zjlButton/index.vue')['default']
   }
 }
